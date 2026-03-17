@@ -1,0 +1,101 @@
+/* ToastNotification Component Styles */
+
+.toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    border-radius: var(--radius-md);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--overlay-medium);
+    box-shadow: var(--shadow-lg);
+    animation: slideInRight 0.3s ease;
+    z-index: var(--z-toast);
+    min-width: 300px;
+    max-width: 500px;
+}
+
+.toast-icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.toast-message {
+    flex: 1;
+    font-size: var(--text-base);
+    font-weight: var(--font-medium);
+    color: var(--text-primary);
+    line-height: var(--leading-normal);
+}
+
+.toast-close {
+    flex-shrink: 0;
+    background: transparent;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: color var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+}
+
+.toast-close:hover {
+    color: var(--text-primary);
+    background: var(--overlay-light);
+}
+
+/* Toast Type Variants */
+.toast-success {
+    border-left: 4px solid var(--status-success);
+}
+
+.toast-success .toast-icon {
+    color: var(--status-success);
+}
+
+.toast-error {
+    border-left: 4px solid var(--status-error);
+}
+
+.toast-error .toast-icon {
+    color: var(--status-error);
+}
+
+.toast-warning {
+    border-left: 4px solid var(--status-warning);
+}
+
+.toast-warning .toast-icon {
+    color: var(--status-warning);
+}
+
+.toast-info {
+    border-left: 4px solid var(--status-info);
+}
+
+.toast-info .toast-icon {
+    color: var(--status-info);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .toast {
+        bottom: 16px;
+        right: 16px;
+        left: 16px;
+        min-width: auto;
+        max-width: none;
+    }
+
+    .toast-message {
+        font-size: var(--text-sm);
+    }
+}

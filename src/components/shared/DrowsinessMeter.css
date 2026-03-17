@@ -1,0 +1,135 @@
+/* DrowsinessMeter Component Styles */
+
+.drowsiness-meter {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(12px);
+    padding: 16px;
+    border-radius: var(--radius-md);
+    text-align: center;
+    min-width: 100px;
+    z-index: var(--z-overlay);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: var(--shadow-lg);
+}
+
+.meter-title {
+    font-size: var(--text-xs);
+    font-weight: var(--font-bold);
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+    margin: 0 0 12px 0;
+    text-transform: uppercase;
+}
+
+.meter-visual {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.meter-track {
+    width: 24px;
+    height: 150px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-sm);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.meter-fill {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transition: height 0.5s ease, background-color 0.3s ease;
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+}
+
+.meter-fill-critical {
+    animation: alertPulse 1.5s ease-in-out infinite;
+}
+
+.meter-markers {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 150px;
+    font-size: 9px;
+    color: var(--text-muted);
+    font-weight: var(--font-medium);
+}
+
+.marker {
+    line-height: 1;
+}
+
+.meter-percentage {
+    font-size: var(--text-2xl);
+    font-weight: var(--font-bold);
+    color: var(--text-primary);
+    line-height: var(--leading-none);
+    margin-bottom: 8px;
+    font-family: var(--font-mono);
+}
+
+.meter-status {
+    font-size: var(--text-xs);
+    font-weight: var(--font-bold);
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.meter-status-normal {
+    background: rgba(16, 185, 129, 0.2);
+    color: var(--status-success);
+    border: 1px solid var(--status-success);
+}
+
+.meter-status-warning {
+    background: rgba(245, 158, 11, 0.2);
+    color: var(--status-warning);
+    border: 1px solid var(--status-warning);
+}
+
+.meter-status-critical {
+    background: rgba(239, 68, 68, 0.2);
+    color: var(--status-error);
+    border: 1px solid var(--status-error);
+    animation: glowPulseError 2s ease-in-out infinite;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .drowsiness-meter {
+        right: 8px;
+        padding: 12px;
+        min-width: 80px;
+    }
+
+    .meter-track {
+        width: 20px;
+        height: 120px;
+    }
+
+    .meter-markers {
+        height: 120px;
+        font-size: 8px;
+    }
+
+    .meter-percentage {
+        font-size: var(--text-xl);
+    }
+
+    .meter-title {
+        font-size: 10px;
+    }
+}

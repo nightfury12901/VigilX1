@@ -1,0 +1,596 @@
+/* ==================== LIVES SAVED COUNTER SECTION ==================== */
+
+.lives-saved-counter-section {
+    position: relative;
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: linear-gradient(180deg, #0a0a0a 0%, #1a0a0f 100%);
+    z-index: 1;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ==================== BACKGROUND IMAGES ==================== */
+
+.background-images-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.background-image {
+    position: absolute;
+    width: 220px;
+    height: 160px;
+    opacity: 0;
+    transform: translateZ(0) rotate(var(--rotation, 0deg)) translateX(0) scale(1);
+    will-change: opacity, transform;
+    backface-visibility: hidden;
+    transition: opacity 0.8s ease;
+}
+
+.background-image.visible {
+    animation: fadeImageInOut 5.5s ease-in-out infinite;
+    animation-delay: var(--delay, 0s);
+}
+
+.background-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    filter:
+        grayscale(100%) brightness(0.75) contrast(1.6) blur(0.8px) saturate(0) sepia(15%);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes fadeImageInOut {
+    0% {
+        opacity: 0;
+        transform: translateZ(0) rotate(var(--rotation, 0deg)) translateX(0) scale(1);
+    }
+
+    15% {
+        opacity: 0.5;
+        transform: translateZ(0) rotate(var(--rotation, 0deg)) translateX(var(--parallax, 0px)) scale(1.06);
+    }
+
+    50% {
+        opacity: 0.45;
+        transform: translateZ(0) rotate(var(--rotation, 0deg)) translateX(calc(var(--parallax, 0px) * 1.5)) scale(1.1);
+    }
+
+    80% {
+        opacity: 0.5;
+        transform: translateZ(0) rotate(var(--rotation, 0deg)) translateX(calc(var(--parallax, 0px) * 2)) scale(1.12);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateZ(0) rotate(var(--rotation, 0deg)) translateX(calc(var(--parallax, 0px) * 2.5)) scale(1.14);
+    }
+}
+
+.vignette-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(ellipse 55% 55% at 50% 50%,
+            rgba(0, 0, 0, 0) 0%,
+            rgba(0, 0, 0, 0.3) 45%,
+            rgba(0, 0, 0, 0.7) 75%,
+            rgba(0, 0, 0, 0.95) 100%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.red-vignette {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(ellipse at center,
+            transparent 35%,
+            rgba(139, 0, 0, 0.2) 60%,
+            rgba(80, 0, 0, 0.35) 100%);
+    pointer-events: none;
+    z-index: 1;
+    transition: opacity 0.5s ease;
+}
+
+/* ==================== COUNTER CONTENT ==================== */
+
+.counter-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 40px 20px;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.counter-label-top {
+    font-size: 1.5rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 24px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    opacity: 0;
+    animation: fadeIn 0.5s ease forwards;
+    animation-delay: 0.2s;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.counter-display {
+    font-size: 6rem;
+    font-weight: 900;
+    letter-spacing: -2px;
+    color: #ff4444;
+    text-shadow: 0 0 30px rgba(255, 68, 68, 0.6);
+    transition: transform 0.15s ease;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    will-change: transform, text-shadow;
+}
+
+.counter-display.pulsing {
+    animation: pulseCounter 0.3s ease;
+}
+
+@keyframes pulseCounter {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.08);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.counter-display.final-red {
+    animation: intenseFinalGlow 0.5s ease infinite alternate;
+}
+
+@keyframes intenseFinalGlow {
+    0% {
+        text-shadow: 0 0 40px rgba(255, 68, 68, 0.8), 0 0 80px rgba(255, 68, 68, 0.4);
+    }
+
+    100% {
+        text-shadow: 0 0 70px rgba(255, 68, 68, 1), 0 0 140px rgba(255, 68, 68, 0.6);
+    }
+}
+
+.red-pulse-blast {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 68, 68, 0.75) 0%, transparent 70%);
+    transform: translate(-50%, -50%) scale(1);
+    animation: redPulseBlast 0.8s ease-out forwards;
+    pointer-events: none;
+    z-index: 3;
+}
+
+@keyframes redPulseBlast {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.9;
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(12);
+        opacity: 0;
+    }
+}
+
+/* ==================== VIGILX HERO INTRODUCTION ==================== */
+
+.vigilx-reveal {
+    text-align: center;
+    opacity: 0;
+    animation: fadeIn 0.5s ease forwards;
+}
+
+/* Massive glowing VIGILX name - White text with maroon/pink gradient glow */
+.vigilx-hero-name {
+    font-size: 8rem;
+    font-weight: 900;
+    letter-spacing: 8px;
+    color: #ffffff;
+    text-transform: uppercase;
+    margin: 0;
+    line-height: 1;
+    text-shadow:
+        0 0 40px rgba(139, 21, 56, 0.8),
+        0 0 80px rgba(219, 39, 119, 0.6),
+        0 0 120px rgba(139, 21, 56, 0.4),
+        0 4px 6px rgba(0, 0, 0, 0.4);
+    transform: scale(0.7);
+    animation: vigilxEmerge 0.6s ease-out forwards, vigilxGlow 3s ease-in-out infinite;
+    animation-delay: 0s, 0.6s;
+}
+
+@keyframes vigilxEmerge {
+    0% {
+        opacity: 0;
+        transform: scale(0.7);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes vigilxGlow {
+
+    0%,
+    100% {
+        text-shadow:
+            0 0 40px rgba(139, 21, 56, 0.8),
+            0 0 80px rgba(219, 39, 119, 0.6),
+            0 0 120px rgba(139, 21, 56, 0.4),
+            0 4px 6px rgba(0, 0, 0, 0.4);
+    }
+
+    50% {
+        text-shadow:
+            0 0 40px rgba(139, 21, 56, 1),
+            0 0 80px rgba(219, 39, 119, 0.8),
+            0 0 120px rgba(139, 21, 56, 0.6),
+            0 4px 6px rgba(0, 0, 0, 0.4);
+    }
+}
+
+/* Animated maroon line beneath VIGILX */
+.vigilx-line {
+    width: 0;
+    height: 2px;
+    background: #8B1538;
+    margin: 40px auto 0;
+    box-shadow: 0 0 15px rgba(139, 21, 56, 0.6), 0 0 25px rgba(219, 39, 119, 0.4);
+    transition: width 0.8s ease-in-out;
+}
+
+.vigilx-line.visible {
+    width: 60%;
+}
+
+/* Always watching tagline */
+.vigilx-tagline {
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.95);
+    margin-top: 35px;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: taglineReveal 0.8s ease forwards;
+}
+
+@keyframes taglineReveal {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Final statement with speed highlight */
+.vigilx-statement {
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.85);
+    margin-top: 25px;
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    animation: statementReveal 1s ease forwards;
+}
+
+@keyframes statementReveal {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.vigilx-statement .speed-highlight {
+    color: #DB2777;
+    font-weight: 600;
+    text-shadow: 0 0 10px rgba(219, 39, 119, 0.5);
+}
+
+/* ==================== FADING OVERLAY ==================== */
+
+.fading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #0a0a0a;
+    z-index: 10;
+    animation: fadeIn 0.5s ease forwards;
+}
+
+/* ==================== PHASE STATES ==================== */
+
+.lives-saved-counter-section.waiting .counter-content {
+    opacity: 0;
+}
+
+.lives-saved-counter-section.counting .counter-content,
+.lives-saved-counter-section.paused .counter-content,
+.lives-saved-counter-section.paused-final .counter-content {
+    opacity: 1;
+}
+
+.lives-saved-counter-section.fading .counter-content,
+.lives-saved-counter-section.fading .background-images-container {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.lives-saved-counter-section.final .background-images-container {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* ==================== GRADIENT TRANSITIONS ==================== */
+
+.hero-section::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 120px;
+    background: linear-gradient(to bottom, transparent 0%, #0a0a0a 100%);
+    z-index: 5;
+    pointer-events: none;
+}
+
+.features-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(to top, transparent 0%, #1a0a0f 100%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.features-section {
+    position: relative;
+}
+
+/* ==================== RESPONSIVE DESIGN ==================== */
+
+@media (max-width: 1024px) {
+    .lives-saved-counter-section {
+        min-height: 60vh;
+    }
+
+    .counter-display {
+        font-size: 4.5rem;
+    }
+
+    .counter-label-top {
+        font-size: 1.4rem;
+    }
+
+    .vigilx-hero-name {
+        font-size: 5rem;
+        letter-spacing: 6px;
+    }
+
+    .vigilx-tagline {
+        font-size: 1.4rem;
+    }
+
+    .vigilx-statement {
+        font-size: 1.15rem;
+    }
+
+    .background-image {
+        width: 190px;
+        height: 140px;
+    }
+}
+
+@media (max-width: 768px) {
+    .lives-saved-counter-section {
+        min-height: 55vh;
+    }
+
+    .counter-display {
+        font-size: 3.5rem;
+        letter-spacing: -1px;
+    }
+
+    .counter-label-top {
+        font-size: 1.2rem;
+        padding: 0 20px;
+    }
+
+    .counter-content {
+        padding: 30px 16px;
+    }
+
+    /* VIGILX Mobile */
+    .vigilx-hero-name {
+        font-size: 3.5rem;
+        letter-spacing: 4px;
+    }
+
+    .vigilx-line.visible {
+        width: 90%;
+    }
+
+    .vigilx-tagline {
+        font-size: 1.1rem;
+        margin-top: 28px;
+        padding: 0 20px;
+        letter-spacing: 1px;
+    }
+
+    .vigilx-statement {
+        font-size: 0.95rem;
+        margin-top: 20px;
+        padding: 0 25px;
+    }
+
+    /* Mobile images */
+    .background-image {
+        width: 150px;
+        height: 110px;
+    }
+
+    .background-image img {
+        filter:
+            grayscale(100%) brightness(0.65) contrast(1.5) blur(1.2px) saturate(0) sepia(12%);
+    }
+
+    .background-image.desktop-only {
+        display: none;
+    }
+
+    @keyframes fadeImageInOut {
+
+        0%,
+        100% {
+            opacity: 0;
+            transform: translateZ(0) rotate(var(--rotation, 0deg)) translateX(0) scale(1);
+        }
+
+        15%,
+        80% {
+            opacity: 0.4;
+            transform: translateZ(0) rotate(var(--rotation, 0deg)) translateX(var(--parallax, 0px)) scale(1.05);
+        }
+
+        50% {
+            opacity: 0.35;
+            transform: translateZ(0) rotate(var(--rotation, 0deg)) translateX(calc(var(--parallax, 0px) * 1.3)) scale(1.08);
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .counter-display {
+        font-size: 2.8rem;
+    }
+
+    .vigilx-hero-name {
+        font-size: 2.8rem;
+        letter-spacing: 3px;
+    }
+
+    .vigilx-tagline {
+        font-size: 1rem;
+    }
+
+    .vigilx-statement {
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+
+    .background-image {
+        width: 120px;
+        height: 90px;
+    }
+}
+
+/* ==================== REDUCED MOTION ==================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .background-image,
+    .background-image.visible {
+        animation: none;
+        opacity: 0;
+    }
+
+    .counter-display {
+        transition: none;
+    }
+
+    .counter-display.pulsing,
+    .counter-display.final-red {
+        animation: none;
+    }
+
+    .counter-label-top,
+    .vigilx-reveal,
+    .vigilx-hero-name,
+    .vigilx-tagline,
+    .vigilx-statement {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
+
+    .vigilx-line.visible {
+        transition: none;
+    }
+
+    .red-pulse-blast {
+        display: none;
+    }
+
+    .lives-saved-counter-section.waiting .counter-content {
+        opacity: 1;
+    }
+}
